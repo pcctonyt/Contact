@@ -1,38 +1,41 @@
-import "../css/App.css";
-import React from "react";
+import "./App.css";
+import React, { useState } from "react";
 import ListContacts from "./ListContacts";
 
 const App = () => {
-
-  const contacts = [
-  {
-    id: "karen",
-    name: "Karen Isgrigg",
-    handle: "karen_isgrigg",
-    avatarURL: "http://localhost:5001/karen.jpg",
-  },
-  {
-    id: "richard",
-    name: "Richard Kalehoff",
-    handle: "richardkalehoff",
-    avatarURL: "http://localhost:5001/richard.jpg",
-  },
-  {
-    id: "tyler",
-    name: "Tyler McGinnis",
-    handle: "tylermcginnis",
-    avatarURL: "http://localhost:5001/tyler.jpg",
-  },
-];
+  const removeContact = (contact) => {
+    setContacts(contacts.filter((c) => c.id !== contact.id));
+  }
+  const [contacts, setContacts ] = useState([
+    {
+      id: "karen",
+      name: "Karen Isgrigg",
+      handle: "karen_isgrigg",
+      avatarURL: "http://localhost:5001/karen.jpg",
+    },
+    {
+      id: "richard",
+      name: "Richard Kalehoff",
+      handle: "richardkalehoff",
+      avatarURL: "http://localhost:5001/richard.jpg",
+    },
+    {
+      id: "tyler",
+      name: "Tyler McGinnis",
+      handle: "tylermcginnis",
+      avatarURL: "http://localhost:5001/tyler.jpg",
+    },
+  ])
+  
   
 
 
   return (
     <div>
         <h1>Contacts App</h1>
-        <ListContacts contacts={contacts} />
+        <ListContacts contacts={contacts} onDeleteContact={removeContact} />
     </div>
   );
 };
 
-export default App;
+export default App; 
