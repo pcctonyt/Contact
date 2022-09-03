@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ListContacts.css";
 import PropTypes from "prop-types";
 
 const ListContacts = ({ contacts, onDeleteContact }) => {
+  const [query, setQuery ] = useState("");
+
+  const updateQuery = (query) => {
+    setQuery(query.trim());
+  };
+
+  const clearQuery = () => {
+    updateQuery("");
+  }
+
+  const showingContacts = query === "" ? contacts : contacts.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()));
+
   return (
     <div className="list-contacts">
       <div className="list-contacts-top">
-        <input className="search-contacts" type="text" placeholder="Search Your Contacts" />
+        <input className="search-contacts" type="text" placeholder="Search Your Contacts" value={query} onChange={(event) => updateQuery(event.target.value)}  />
       </div>
 
+      {
+        showingContacts.length !== contacts.length && (
+          <div className="showing-contacts">
+            <span>
+              Now showing { showingContacts.length } of { contacts.length } contacts
+            </span>
+            <button onClick={clearQuery}>Show all</button>
+          </div>
+        )
+      }
       <ol className="contact-list">
-        { contacts.map((contact) => (
+        { showingContacts.map((contact) => (
           <li key={contact.id} className="contact-list-item">
             <div className="contact-avatar" style={{ backgroundImage: `url(${contact.avatarURL})`, }}> 
             </div>
